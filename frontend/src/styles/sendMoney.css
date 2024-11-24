@@ -1,0 +1,50 @@
+/* src/styles/sendMoney.css */
+.send-money-container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .send-money-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .send-money-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .send-money-container input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .send-money-container button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .send-money-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .send-money-container p {
+    text-align: center;
+    color: #d9534f;
+    margin-top: 20px;
+  }
+  

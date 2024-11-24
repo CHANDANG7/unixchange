@@ -1,0 +1,99 @@
+/* EditProfile.css */
+.edit-profile-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Provides uniform spacing between the fields */
+  }
+  
+  .edit-profile-form input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .edit-profile-form input:focus {
+    border-color: #4caf50;
+    outline: none;
+  }
+  
+  .edit-profile-form button {
+    padding: 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-profile-form button:hover {
+    background-color: #45a049;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .buttons button {
+    width: 48%; /* Ensures both buttons fit within the available space */
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    width: 48%;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #e53935;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  /* Optional: Adding responsive design for smaller screens */
+  @media (max-width: 600px) {
+    .edit-profile-container {
+      padding: 15px;
+    }
+  
+    .edit-profile-form input,
+    .edit-profile-form button {
+      font-size: 14px;
+    }
+  }
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .success-message {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+  }
+  

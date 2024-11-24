@@ -1,0 +1,63 @@
+/* Overall container for the exchange rates page */
+.exchange-rates-container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 10px;
+  }
+  
+  /* Header style */
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Styling for the table */
+  .rates-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  /* Table headers */
+  .rates-table th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Table row data */
+  .rates-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Hover effect on table rows */
+  .rates-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Style for the 'Predict' button */
+  .predict-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  .predict-btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Styling for the 'Action' column */
+  .rates-table td:last-child {
+    text-align: center;
+  }
+  

@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure the navbar sticks to the top without gap */
+nav {
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Registration Container */
+.registration-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+.registration-form{
+  margin: 50px;
+}
+
+/* Navbar */
+nav {
+  background-color: #007bff;
+  padding: 30px;
+  color: white;
+  position: absolute;
+  width: 100%;
+  height: 150px;
+}
+
+.welcome-message {
+  text-align: center;
+}
+
+.welcome-message h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.welcome-message p {
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+/* Registration Form */
+.registration-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.registration-logo img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.registration-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.registration-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.registration-form button {
+  width: 150px;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.registration-form button:hover {
+  background-color: #0056b3;
+}
+
+.unique-id {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.login-redirect {
+  margin-top: 20px;
+}
+
+.login-redirect p {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.login-redirect button {
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #007bff;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-redirect button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+.registration-logo{
+  margin-top: 50px;
+}
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+select {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 16px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}

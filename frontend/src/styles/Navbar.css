@@ -1,0 +1,83 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px; /* Increased padding for better spacing */
+  margin: 0;
+  background-color: #007bff;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Added stronger shadow for better visibility */
+  height: 80px; /* Increased height of the navbar */
+  border-radius: 0 0 10px 10px; /* Optional: Rounded corners */
+}
+
+.app-name {
+  font-size: 2.5rem; /* Larger font size for the app name */
+  font-weight: bold;
+  padding-left: 20px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-button {
+  padding: 15px 25px; /* Increased padding for better spacing */
+  background-color: #ffffff;
+  color: #007bff;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.1rem; /* Slightly larger font size */
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 15px;
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+  color: white;
+  transform: translateY(-3px); /* Slight lift effect on hover */
+}
+
+.nav-button.active-link {
+  border-bottom: 3px solid #007bff;
+  color: #0056b3;
+}
+
+.nav-button.active-link:hover {
+  background-color: transparent;
+  transform: none;
+  color: #0056b3;
+}
+
+/* Adjust padding for icons */
+.nav-button i { 
+  margin-top: 5px; /* Adds space between icon and text */
+}
+
+/* Add padding to the body to ensure content doesn't hide under the fixed navbar */
+body {
+  padding-top: 90px; /* Increased space to match new navbar height */
+}
+
+/* Optional: Style for a smoother transition on hover */
+.nav-button {
+  transition: all 0.3s ease;
+}
+
+/* Optional: Style for active link */
+.nav-button.active-link {
+  background-color: #e9f7ff; /* Light background for active link */
+  transform: translateY(-1px); /* Slight lift effect when active */
+}

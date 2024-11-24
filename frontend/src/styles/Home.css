@@ -1,0 +1,93 @@
+.money-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px; /* Increased padding */
+  margin-bottom: 30px;
+  margin-top: 5px;
+}
+
+.option {
+  width: 80%;
+  margin: 20px auto;
+  padding: 50px; /* Increased padding */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.option h2 {
+  margin-bottom: 15px;
+  color: #007bff;
+  font-size: 1.8rem;
+}
+
+.option p {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Recent News Section */
+.recent-news {
+  margin-top: 30px;
+}
+
+.recent-news h2 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.news-item {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.news-image {
+  width: 250px; /* Increased width */
+  height: 160px; /* Increased height */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.news-content {
+  flex: 1;
+}
+
+.news-content h3 {
+  color: #0056b3;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.news-content p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.news-content {
+  padding-left: 15px;
+}
+
+/* About Us Section */
+.about-section {
+  text-align: center;
+  margin-top: 50px;
+  padding-bottom: 20px;
+}
+
+.about-section h2 {
+  color: #007bff;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.about-section p {
+  color: #555;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}

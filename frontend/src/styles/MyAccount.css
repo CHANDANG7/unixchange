@@ -1,0 +1,197 @@
+/* MyAccount Container */
+.myaccount-container {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+/* Balance Section */
+.balance-container {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.balance-text {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.balance-container .deposit-toggle-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.balance-container .deposit-toggle-btn:hover {
+  background-color: #45a049;
+}
+
+/* Deposit Section */
+h3{
+  margin: 20px 20px;
+}
+.deposit-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input[type="number"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus, input[type="password"]:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Profile Edit and Logout Buttons */
+button {
+  padding: 12px;
+  margin: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Buttons Container */
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.buttons-container button {
+  width: 48%;
+}
+
+.edit-profile-btn-container, .logout-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.logout-button {
+  background-color: #f44336;
+  width: 70px;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #e53935;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* Optional: Adding responsive design for smaller screens */
+@media (max-width: 600px) {
+  .myaccount-container {
+    padding: 15px;
+  }
+
+  .balance-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .balance-container .deposit-toggle-btn {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .buttons-container button {
+    width: 100%;
+  }
+}
+/* Deposit Toggle Button */
+.deposit-toggle-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 8px 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  width: auto; /* Auto width to fit text */
+  height: 30px; /* Consistent button height */
+}
+
+.deposit-toggle-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.deposit-toggle-btn:focus {
+  outline: none; /* Remove the default outline */
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.7); /* Green glow effect when focused */
+}
+
+.deposit-toggle-btn:active {
+  background-color: #388e3c; /* Even darker green when button is clicked */
+}
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
+  text-align: center;
+  margin-top: 10px;
+}
