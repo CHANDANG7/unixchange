@@ -1,12 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Home from "./pages/Home"; // Ensure you have this Home component
-import MyAccount from "./pages/MyAccount"; // Ensure the MyAccount component is imported
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Ensure BrowserRouter is imported
+import Login from './components/Login';
+import Register from './components/Register';
+import Home from './pages/Home'; 
+import MyAccount from './pages/MyAccount'; 
 import SendMoneyPage from './pages/sendMoney';
 import RequestMoneyPage from './pages/requestMoney';
 import EditProfile from './components/EditProfile';
 import ExchangeRates from './pages/ExchangeRates';
+import TransactionPage from './pages/TransactionPage';
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
         <Route path="/myaccount" element={<MyAccount />} />
         <Route path="/send-money" element={<SendMoneyPage />} />
         <Route path="/request-money" element={<RequestMoneyPage />} />
-        <Route path="/exchange-rates" element={<ExchangeRates/>} />
+        <Route path="/exchange-rates" element={<ExchangeRates />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/transactions" element={<TransactionPage />} />
       </Routes>
     </Router>
   );
