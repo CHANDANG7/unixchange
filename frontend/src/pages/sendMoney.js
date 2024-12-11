@@ -17,7 +17,7 @@ const SendMoneyPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Populate currencies if needed (Currently hardcoded)
+    // Initialize currencies
     setCurrencies(['INR', 'USD', 'EUR', 'GBP', 'AUD', 'CAD', 'CNY']);
   }, []);
 
@@ -25,9 +25,8 @@ const SendMoneyPage = () => {
     const value = e.target.value;
     setAmount(value);
 
-    // Check if the entered amount is less than or equal to 1
-    if (value <= 1 || value === '') {
-      setError('Amount must be greater than 1');
+    if (value < 1|| value === '') {
+      setError('Amount must be greater than 0');
     } else {
       setError('');
     }
@@ -35,11 +34,12 @@ const SendMoneyPage = () => {
 
   const handleSendMoney = async (e) => {
     e.preventDefault();
+
     if (error) {
-      setTransactionMessage('Please correct the errors before proceeding.');
+      setTransactionMessage('Please resolve the errors before proceeding.');
       return;
     }
-    
+
     setLoading(true);
     setTransactionMessage('');
 
@@ -49,7 +49,7 @@ const SendMoneyPage = () => {
         throw new Error('User is not logged in.');
       }
 
-      // Make validation request to backend
+      // Validate the transaction
       const validationResponse = await axios.post('http://localhost:5000/api/transaction/validate', {
         senderUniqueId,
         receiverInput,
@@ -57,44 +57,31 @@ const SendMoneyPage = () => {
         amount,
       });
 
-      // Check if validation response indicates receiver does not exist
-      if (validationResponse.data.message === 'Receiver does not exist') {
-        setTransactionMessage('Receiver does not exist');
-        setLoading(false);
-        return;  // Stop here if receiver does not exist
-      }
-
       const { receiverUniqueId, receiverCurrency, exchangeRate } = validationResponse.data;
 
-      // Proceed with sending money after validation
+      // Perform the transaction
       const transactionResponse = await axios.post('http://localhost:5000/api/transaction/sendMoney', {
         senderUniqueId,
-        receiverInput,  // Use receiverInput instead of receiverUniqueId
+        receiverInput, // Use receiverInput as entered
         password,
         amount,
       });
 
-      // Success message with sent currency and amount
-      setTransactionMessage(`${transactionResponse.data.message}. Sent Currency: ${transactionResponse.data.sentCurrency}. Amount: ${transactionResponse.data.amount}`);
+      // Display success message
+      setTransactionMessage(
+        `Transaction successful! Sent ${transactionResponse.data.amount} ${transactionResponse.data.sentCurrency} to ${receiverInput}.`
+      );
       setLoading(false);
 
+      // Redirect after success
       setTimeout(() => {
         navigate('/home');
-      }, 2000);
+      }, 3000);
     } catch (err) {
       setLoading(false);
-
-      // Check for backend response errors
+      // Handle error messages from the backend
       if (err.response && err.response.data) {
-        if (err.response.data.message === 'Incorrect password') {
-          setTransactionMessage('Enter correct password');
-        } else if (err.response.data.message === 'Receiver not found') {
-          setTransactionMessage('Receiver not found');
-        } else if (err.response.data.message === 'Insufficient balance') {
-          setTransactionMessage('Insufficient balance');
-        } else {
-          setTransactionMessage(err.response.data.message || 'Transaction failed');
-        }
+        setTransactionMessage(err.response.data.message || 'Transaction failed.');
       } else {
         setTransactionMessage('An error occurred. Please try again later.');
       }
@@ -127,7 +114,7 @@ const SendMoneyPage = () => {
               onChange={(e) => setSenderCurrency(e.target.value)}
               required
             >
-              {currencies.map(currency => (
+              {currencies.map((currency) => (
                 <option key={currency} value={currency}>
                   {currency}
                 </option>
@@ -143,7 +130,7 @@ const SendMoneyPage = () => {
               onChange={(e) => setReceiverCurrency(e.target.value)}
               required
             >
-              {currencies.map(currency => (
+              {currencies.map((currency) => (
                 <option key={currency} value={currency}>
                   {currency}
                 </option>
@@ -158,7 +145,7 @@ const SendMoneyPage = () => {
               id="amount"
               value={amount}
               onChange={handleAmountChange}
-              placeholder="Amount to Send"
+              placeholder="Enter amount to send"
               required
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -171,7 +158,7 @@ const SendMoneyPage = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter Password"
+              placeholder="Enter your password"
               required
             />
           </div>
@@ -181,11 +168,7 @@ const SendMoneyPage = () => {
           </button>
         </form>
 
-        {transactionMessage && (
-          <div className={`transaction-message ${loading ? 'loading' : ''}`}>
-            {transactionMessage}
-          </div>
-        )}
+        {transactionMessage && <div className="transaction-message">{transactionMessage}</div>}
       </div>
     </>
   );

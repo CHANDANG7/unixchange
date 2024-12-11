@@ -1,31 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { validateDetails, getExchangeRate, updateBalances, logTransaction } = require('../services/transactionService');
-const User = require('../models/User'); 
-const Transaction = require('../models/Transaction'); // Import the Transaction model
+const { validateDetails } = require('../services/transactionService');
+const User = require('../models/User');
+const Transaction = require('../models/Transaction');
 
-// POST method to validate transaction details
-router.post('/validate', async (req, res) => {
-  const { senderUniqueId, receiverInput, password, amount } = req.body;
-
-  try {
-    const { receiverUniqueId, receiverCurrency, exchangeRate } = await validateDetails(
-      senderUniqueId,
-      receiverInput,
-      password,
-      amount
-    );
-    res.status(200).json({
-      message: 'Validation successful',
-      receiverUniqueId,
-      receiverCurrency,
-      exchangeRate,
-    });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
+// POST method to send money
 // POST method to send money
 router.post('/sendMoney', async (req, res) => {
   const { senderUniqueId, receiverInput, password, amount } = req.body;
@@ -52,21 +31,33 @@ router.post('/sendMoney', async (req, res) => {
       throw new Error('Insufficient balance');
     }
 
+    // Calculate the sender and receiver amounts
+    const senderAmount = amount;
+    const receiverAmount = amount * exchangeRate; // Apply exchange rate to the transfer
+
+    // Check if the receiver amount is valid
+    if (receiverAmount <= 0) {
+      throw new Error('Invalid transaction amount after conversion');
+    }
+
     // Update balances
-    sender.balance -= amount;
-    receiver.balance += amount * exchangeRate; // Apply exchange rate to the transfer
+    sender.balance -= senderAmount;
+    receiver.balance += receiverAmount;
 
     // Save the updated balances
     await sender.save();
     await receiver.save();
 
-    // Optionally, log the transaction in your database (ensure you have a Transaction model)
+    // Log the transaction in your database
     const transaction = new Transaction({
       sender: sender.uniqueId,
       receiver: receiver.uniqueId,
-      amount,
+      senderAmount,         // Sender's amount
+      receiverAmount,       // Receiver's amount after exchange rate
       senderCurrency: sender.currency,
       receiverCurrency: receiver.currency,
+      transactionDate: new Date(),  // Add the transaction date
+      status: 'Completed',  // Default status
     });
     await transaction.save();
 
@@ -74,35 +65,60 @@ router.post('/sendMoney', async (req, res) => {
     res.status(200).json({
       message: 'Transaction successful',
       sentCurrency: sender.currency,  // Include the sent currency
-      amount,                          // Include the amount
+      amount: senderAmount,           // Include the amount sent
       receiverUniqueId,
       receiverCurrency,
       exchangeRate,
     });
   } catch (error) {
+    // In case of failure, log the transaction with 'Failed' status
+    const failedTransaction = new Transaction({
+      sender: senderUniqueId,
+      receiver: receiverInput,
+      senderAmount: amount,
+      receiverAmount: 0,  // No amount sent in case of failure
+      senderCurrency: 'USD',  // Assuming USD, or adjust based on your currency system
+      receiverCurrency: 'USD',  // Assuming USD
+      transactionDate: new Date(),
+      status: 'Failed',  // Set status as Failed
+    });
+    await failedTransaction.save();
+
+    // Respond with error message
     res.status(400).json({ message: error.message });
   }
 });
 
 
-
 // Route to fetch user's recent transactions
 router.get('/history', async (req, res) => {
-  const senderUniqueId = req.query.senderUniqueId; // Get user ID from query param
+  const { uniqueId } = req.query;
+
+  if (!uniqueId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
 
   try {
-    // Fetch and populate sender and receiver data in the transaction history
     const transactions = await Transaction.find({
-      $or: [{ sender: senderUniqueId }, { receiver: senderUniqueId }]
-    })
-      .populate('sender')  // Populate sender's data (make sure sender is a reference in the schema)
-      .populate('receiver')  // Populate receiver's data (make sure receiver is a reference in the schema)
-      .sort({ transactionDate: -1 })  // Sort by transaction date (latest first)
-      .limit(10);  // Limit to 10 recent transactions
+      $or: [{ sender: uniqueId }, { receiver: uniqueId }],
+    });
 
-    res.status(200).json({ transactions });
+    const formattedTransactions = transactions.map((transaction) => ({
+      transactionDate: transaction.transactionDate,
+      sender: transaction.sender,
+      receiver: transaction.receiver,
+      senderAmount: transaction.senderAmount,
+      senderCurrency: transaction.senderCurrency,
+      receiverAmount: transaction.receiverAmount, // Converted amount
+      receiverCurrency: transaction.receiverCurrency, // Currency after conversion
+      exchangeRate: transaction.exchangeRate, // Exchange rate applied
+      status: transaction.status,
+    }));
+
+    res.json({ transactions: formattedTransactions });
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching transactions', error: err.message });
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch transactions' });
   }
 });
 
