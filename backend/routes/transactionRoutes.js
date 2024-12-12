@@ -5,7 +5,6 @@ const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 
 // POST method to send money
-// POST method to send money
 router.post('/sendMoney', async (req, res) => {
   const { senderUniqueId, receiverInput, password, amount } = req.body;
 

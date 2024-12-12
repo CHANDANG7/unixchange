@@ -4,10 +4,12 @@ import Register from './components/Register';
 import Home from './pages/Home'; 
 import MyAccount from './pages/MyAccount'; 
 import SendMoneyPage from './pages/sendMoney';
-import RequestMoneyPage from './pages/requestMoney';
+import RequestMoneyPage from './pages/requestMoneyPage';
 import EditProfile from './components/EditProfile';
 import ExchangeRates from './pages/ExchangeRates';
 import TransactionPage from './pages/TransactionPage';
+import AlertPage from './pages/alertPage'
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
         <Route path="/exchange-rates" element={<ExchangeRates />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/transactions" element={<TransactionPage />} />
+        <Route path="/alerts" element={<AlertPage/>}/>
       </Routes>
     </Router>
   );

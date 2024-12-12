@@ -1,0 +1,79 @@
+/* Basic container styling */
+.sender-alert-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styling */
+.sender-alert-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Table styling */
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.request-table th,
+.request-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.request-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.request-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Button styling */
+.send-btn,
+.cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.send-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.send-btn:hover {
+  background-color: #45a049;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #e53935;
+}
+
+/* No requests styling */
+.sender-alert-container p {
+  text-align: center;
+  color: #888;
+}

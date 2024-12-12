@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../styles/sendMoney.css';
 
@@ -15,9 +15,11 @@ const SendMoneyPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { requestId } = location.state || {}; // Get requestId passed from AlertPage
 
   useEffect(() => {
-    // Initialize currencies
     setCurrencies(['INR', 'USD', 'EUR', 'GBP', 'AUD', 'CAD', 'CNY']);
   }, []);
 
@@ -25,7 +27,7 @@ const SendMoneyPage = () => {
     const value = e.target.value;
     setAmount(value);
 
-    if (value < 1|| value === '') {
+    if (value < 1 || value === '') {
       setError('Amount must be greater than 0');
     } else {
       setError('');
@@ -49,23 +51,20 @@ const SendMoneyPage = () => {
         throw new Error('User is not logged in.');
       }
 
-      // Validate the transaction
-      const validationResponse = await axios.post('http://localhost:5000/api/transaction/validate', {
-        senderUniqueId,
-        receiverInput,
-        password,
-        amount,
-      });
-
-      const { receiverUniqueId, receiverCurrency, exchangeRate } = validationResponse.data;
-
       // Perform the transaction
       const transactionResponse = await axios.post('http://localhost:5000/api/transaction/sendMoney', {
         senderUniqueId,
         receiverInput, // Use receiverInput as entered
         password,
         amount,
+        receiverCurrency, // Include receiver's currency
+        senderCurrency,   // Include sender's currency
       });
+
+      // Update the request status to 'sent' after successful payment
+      if (requestId) {
+        await axios.post('http://localhost:5000/api/request/sendMoney', { requestId });
+      }
 
       // Display success message
       setTransactionMessage(
@@ -75,7 +74,7 @@ const SendMoneyPage = () => {
 
       // Redirect after success
       setTimeout(() => {
-        navigate('/home');
+        navigate('/home'); // Navigate to the home page or your desired page
       }, 3000);
     } catch (err) {
       setLoading(false);

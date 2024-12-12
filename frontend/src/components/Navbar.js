@@ -26,8 +26,8 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/set-alerts" className="nav-button" activeClassName="active-link">
-              Set Alerts
+            <NavLink to="/alerts" className="nav-button" activeClassName="active-link">
+              Alerts
             </NavLink>
           </li>
           <li>

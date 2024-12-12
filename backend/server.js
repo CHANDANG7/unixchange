@@ -8,6 +8,7 @@ dotenv.config({ path: '../.env' });
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
+const requestRoutes=require('./routes/requestRoutes')
 const app = express();
 
 // Middleware
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/transaction', transactionRoutes);
+app.use('/api/request',requestRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
