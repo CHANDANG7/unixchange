@@ -7,6 +7,9 @@ const ExchangeRates = () => {
   const [rates, setRates] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [prediction, setPrediction] = useState(null); // For storing the prediction result
+  const [showPopup, setShowPopup] = useState(false); // To toggle the popup visibility
+  const [isPredicting, setIsPredicting] = useState(false); // To show "Predicting..." message
 
   // Function to fetch exchange rates
   const fetchRates = async () => {
@@ -21,6 +24,48 @@ const ExchangeRates = () => {
       setLoading(false); // Stop loading even if there's an error
     }
   };
+
+  // Function to handle the prediction request
+  const handlePrediction = async (baseCurrency, targetCurrency) => {
+    const today = new Date();
+    const day = today.getDate() + 1; // Increment the day by 1 to get the next day
+    const month = today.getMonth() + 1; // Month is 0-based
+    const year = today.getFullYear();
+
+    // If it's the last day of the month, handle month and year rollover
+    if (day > 31) {
+        day = 1;
+        month += 1;
+    }
+
+    if (month > 12) {
+        month = 1;
+        year += 1;
+    }
+
+    try {
+        setIsPredicting(true); // Set predicting state to true immediately
+        setShowPopup(true); // Show the popup as soon as the prediction process starts
+
+        const response = await axios.post('http://localhost:5000/api/user/predict', {
+            base_currency: baseCurrency,
+            currency: targetCurrency,
+            day,
+            month,
+            year
+        });
+
+        const { exchange_rate } = response.data;
+
+        // Updated message with exchange_rate in bold
+        setPrediction(`Predicted Exchange Rate for ${targetCurrency}: <strong>${exchange_rate}</strong> on  ${day}/${month}/${year}`);
+        setIsPredicting(false); // Set predicting state to false once prediction is received
+    } catch (err) {
+        console.error('Error predicting exchange rate:', err.message);
+        setPrediction('Failed to fetch prediction. Please try again.');
+        setIsPredicting(false); // Set predicting state to false even if there's an error
+    }
+};
 
   // Fetch exchange rates initially when component mounts
   useEffect(() => {
@@ -56,7 +101,10 @@ const ExchangeRates = () => {
               <td>{currency}</td>
               <td>{rate}</td>
               <td>
-                <button className="predict-btn" onClick={() => alert(`Predicting for ${currency}`)}>
+                <button
+                  className="predict-btn"
+                  onClick={() => handlePrediction('USD', currency)} // 'USD' is the base currency
+                >
                   Predict
                 </button>
               </td>
@@ -64,6 +112,24 @@ const ExchangeRates = () => {
           ))}
         </tbody>
       </table>
+
+     {/* Popup Modal */}
+{showPopup && (
+  <div className="popup">
+    <div className="popup-content">
+      <button className="close-btn" onClick={() => setShowPopup(false)}>×</button>
+      
+      {/* Exchange Rate Prediction Header */}
+      <div className="prediction-header">
+        Exchange Rate Prediction
+      </div>
+      
+      {/* Render prediction message with HTML (bold exchange_rate) */}
+      <p dangerouslySetInnerHTML={{ __html: isPredicting ? "Predicting... Please wait..." : prediction }} />
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

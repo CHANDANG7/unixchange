@@ -15,9 +15,28 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const validateName = (name) => /^[a-zA-Z\s]+$/.test(name); // Allow alphabets and spaces only
+  const validateEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // Simple email format validation
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(''); // Clear previous error messages
     setLoading(true); // Start loading
+
+    // Validate name for alphabets only
+    if (!validateName(name)) {
+      setError('Name can contain alphabets and spaces only.');
+      setLoading(false);
+      return;
+    }
+
+    // Validate email format
+    if (!validateEmail(email)) {
+      setError('Invalid email format. Please include @domain.');
+      setLoading(false);
+      return;
+    }
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -41,7 +60,6 @@ const Registration = () => {
       setTimeout(() => {
         navigate('/'); // Redirect to login page after successful registration
       }, 1000); // Wait for 1 second before redirecting
-
     } catch (err) {
       // Handle errors based on response
       if (err.response && err.response.data) {
@@ -49,7 +67,7 @@ const Registration = () => {
         if (err.response.data.message.includes('duplicate key')) {
           setError('User already exists. Please use a different email.');
         } else {
-          setError('Registration failed. Please try again.');
+          setError(`Registration failed: ${err.response.data.message}`);
         }
       } else {
         // General error
@@ -76,6 +94,9 @@ const Registration = () => {
       <div className="registration-container">
         <div className="registration-body">
           <div className="registration-form">
+            {/* Display error message if registration fails */}
+            {error && <p className="error-message">{error}</p>}
+
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -133,9 +154,6 @@ const Registration = () => {
                 {loading ? 'Registering...' : 'Register'}
               </button>
             </form>
-
-            {/* Display error message if registration fails */}
-            {error && <p className="error-message">{error}</p>}
 
             {/* Display unique ID after successful registration */}
             {uniqueId && (

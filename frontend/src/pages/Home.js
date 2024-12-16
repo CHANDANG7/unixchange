@@ -1,121 +1,97 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import axios from "axios"; // For making API calls
+import axios from "axios";
 import "../styles/Home.css";
 
 const Home = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState("");
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const [searchInput, setSearchInput] = useState(""); // State for search input
-  const [user, setUser] = useState(null); // State to store fetched user details
-  const [balance, setBalance] = useState(""); // State to store user's balance
-  const [loading, setLoading] = useState(false); // State to track loading state
-  const [error, setError] = useState(""); // State to handle errors
-
-  // Function to handle "Send Money" click
   const handleSendMoneyClick = () => {
-    navigate("/send-money"); // Navigate to SendMoneyPage
+    navigate("/send-money");
   };
 
   const handleRequestMoneyClick = () => {
-    navigate('/request-money'); // Navigate to the request money page
+    navigate("/request-money");
   };
 
-  // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };
 
-  // Fetch user data by email
-  const fetchUserDataByEmail = async (email) => {
+  const fetchUserData = async (input) => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
-      const response = await axios.get(`http://localhost:5000/api/user/email/${encodeURIComponent(email)}`);
+      const isEmail = /\S+@\S+\.\S+/.test(input);
+      const endpoint = isEmail
+        ? `http://localhost:5000/api/user/email/${encodeURIComponent(input)}`
+        : `http://localhost:5000/api/user/uniqueid/${input}`;
+      const response = await axios.get(endpoint);
       setUser(response.data);
-      setBalance(response.data.balance);
     } catch (err) {
-      setError('Failed to fetch user data.');
-      console.error('Error:', err);
+      setError("Failed to fetch user data.");
+      console.error("Error:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch user data by uniqueId
-  const fetchUserDataByUniqueId = async (uniqueId) => {
-    setLoading(true);
-    setError('');
-    try {
-      const response = await axios.get(`http://localhost:5000/api/user/uniqueid/${uniqueId}`);
-      setUser(response.data);
-      setBalance(response.data.balance);
-    } catch (err) {
-      setError('Failed to fetch user data.');
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchInput) {
+      fetchUserData(searchInput);
     }
   };
 
-  // Function to handle search submission
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-
-    if (!searchInput) return;
-
-    setLoading(true);
-    setError(""); // Clear previous errors
-
-    // Check if input is an email or uniqueId
-    const isEmail = /\S+@\S+\.\S+/.test(searchInput); // Regex to check if the input is a valid email
-
-    if (isEmail) {
-      // Fetch user data by email if the input is an email
-      await fetchUserDataByEmail(searchInput);
-    } else {
-      // Fetch user data by uniqueId if the input is not an email
-      await fetchUserDataByUniqueId(searchInput);
-    }
+  const handleCloseUserDetails = () => {
+    setUser(null);
+    setSearchInput("");
   };
 
   return (
     <div>
       <Navbar />
       <div className="home-body">
-        {/* Search Section placed below Navbar and above "Send Money" */}
-        <div className="search-section">
-          <form onSubmit={handleSearchSubmit} className="search-form">
-            <input
-              type="text"
-              value={searchInput}
-              onChange={handleSearchChange}
-              placeholder="Search by Email or UniqueID"
-              className="search-input"
-            />
-            <button type="submit" className="search-button">
-              <i className="fa fa-search"></i> {/* You can use FontAwesome search icon */}
-            </button>
-          </form>
-          
-          {loading && <p>Loading...</p>}
-          {error && <p>{error}</p>}
+      <div className="search-section">
+      <div className="search-bar-container">
+       <input
+      type="text"
+      value={searchInput}
+      onChange={handleSearchChange}
+      placeholder="Search by Email or UniqueID"
+      className="search-bar-input"
+    />
+    <i className="fas fa-search" onClick={handleSearchSubmit}>submit</i>
+  </div>
 
-          {user && (
-            <div className="user-details">
-              <h3>User Details:</h3>
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Unique ID:</strong> {user.uniqueId}</p>
-              <p><strong>Balance:</strong> {balance} {user.currency}</p>
-            </div>
-          )}
-        </div>
+  {loading && <p>Loading...</p>}
+  {error && <p>{error}</p>}
+
+  {user && (
+    <div className="user-details">
+      <button
+        className="close-button"
+        onClick={handleCloseUserDetails}
+      >
+        X
+      </button>
+      <h3>User Details:</h3>
+      <p><strong>Unique ID:</strong> {user.uniqueId}</p>
+      <p><strong>Name:</strong> {user.name}</p>
+      <p><strong>Country:</strong> {user.country}</p>
+      <p><strong>Email:</strong> {user.email}</p>
+    </div>
+  )}
+</div>
+
 
         <div className="money-options">
-          {/* "Send Money" Option with click handler */}
           <div className="option send-money" onClick={handleSendMoneyClick}>
             <h2>Send Money</h2>
             <p>Quickly and securely transfer money to other UniXchange users.</p>
@@ -155,7 +131,7 @@ const Home = () => {
         <div className="about-section">
           <h2>About UniXchange</h2>
           <p>
-            UniXchange is a platform designed for seamless international transactions. 
+            UniXchange is a platform designed for seamless international transactions.
             Stay updated with real-time exchange rates and manage your money effectively.
           </p>
         </div>

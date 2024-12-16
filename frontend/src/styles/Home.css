@@ -91,3 +91,87 @@
   line-height: 1.6;
   font-size: 1.1rem;
 }
+
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px; /* Margin above the whole search section */
+  width: 100%; /* Ensure the section takes up the full width */
+}
+
+.search-bar-container {
+  display: flex;
+  margin-top: 5px;
+  align-items: center;
+  height: 40px; /* Adjusted height to match the size of the input */
+  width: 90%; /* Added width for better positioning inside the section */ /* Optional: Set a max-width for container */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 5px; /* Padding inside the container */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for visibility */
+}
+
+
+.search-bar-input {
+  flex: 1;
+  height: 20px;
+  padding: 5px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-bar-input:focus {
+  border-color: #007bff; /* Highlight the border when input is focused */
+}
+
+.fas.fa-search {
+  background-color: #007bff;
+  color:white;
+  font-size: 16px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-details {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+  position: relative; /* Ensure the button stays inside the container */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: transparent; /* Initially invisible */
+  font-size: 2px; /* Very small size */
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Position it to the top-right corner */
+  width: 2px; /* Very small width */
+  height: 2px; /* Very small height */
+  transition: all 0.3s ease; /* Smooth transition for size and color */
+  cursor: pointer;
+  display: flex;
+  justify-content: center; /* Center the "X" horizontally */
+  align-items: center; /* Center the "X" vertically */
+}
+
+.user-details:hover .close-button {
+  color: black; /* Make the "X" black when hovered */
+  width: 20px; /* Width increases to 20px on hover */
+  height: 20px; /* Height increases to 20px on hover */
+  font-size: 16px; /* Make the "X" appear larger */
+}

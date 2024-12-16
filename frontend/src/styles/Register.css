@@ -130,7 +130,7 @@ nav {
 .error-message {
   color: red;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 select {
   padding: 10px;
@@ -144,3 +144,4 @@ select {
   text-align: center;
   margin-top: 10px;
 }
+
