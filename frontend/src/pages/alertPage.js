@@ -10,8 +10,6 @@ const AlertPage = () => {
   const uniqueId = localStorage.getItem('uniqueId');
   const navigate = useNavigate();
 
-  const isSender = true; // Assuming the logged-in user is a sender
-
   useEffect(() => {
     const fetchRequests = async () => {
       try {

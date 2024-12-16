@@ -55,7 +55,7 @@ router.post('/requestMoney', async (req, res) => {
 
     // Get exchange rate dynamically from API
     const exchangeRate = await getExchangeRate(senderCurrency, receiverCurrency);
-    const convertedAmount = amount * exchangeRate;
+    const convertedAmount = (amount * exchangeRate).toFixed(4);
 
     const request = new Request({
       requesterId,

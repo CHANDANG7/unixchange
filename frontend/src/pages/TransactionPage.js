@@ -74,9 +74,9 @@ const TransactionPage = () => {
                   <td>{transaction.receiver}</td>
                   <td>
                     {transaction.sender === userId ? (
-                      `${transaction.senderAmount} ${transaction.senderCurrency || 'Currency'}` // For sender
+                      `${parseFloat(transaction.senderAmount).toFixed(3)} ${transaction.senderCurrency || 'Currency'}` // For sender
                     ) : transaction.receiver === userId ? (
-                      `${transaction.receiverAmount} ${transaction.receiverCurrency || 'Currency'}` // For receiver
+                      `${parseFloat(transaction.receiverAmount).toFixed(3)} ${transaction.receiverCurrency || 'Currency'}` // For receiver
                     ) : (
                       ''
                     )}

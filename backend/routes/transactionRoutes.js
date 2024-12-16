@@ -31,8 +31,8 @@ router.post('/sendMoney', async (req, res) => {
     }
 
     // Calculate the sender and receiver amounts
-    const senderAmount = amount;
-    const receiverAmount = amount * exchangeRate; // Apply exchange rate to the transfer
+    const senderAmount = amount.toFixed(3);;
+    const receiverAmount = (amount * exchangeRate).toFixed(3); // Apply exchange rate to the transfer
 
     // Check if the receiver amount is valid
     if (receiverAmount <= 0) {
@@ -40,8 +40,8 @@ router.post('/sendMoney', async (req, res) => {
     }
 
     // Update balances
-    sender.balance -= senderAmount;
-    receiver.balance += receiverAmount;
+    sender.balance -= parseFloat(senderAmount);
+    receiver.balance += parseFloat(receiverAmount);
 
     // Save the updated balances
     await sender.save();
